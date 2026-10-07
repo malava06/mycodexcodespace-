@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f7fb">
+  <title>Counter</title>
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #182230;
+      background: #f4f7fb;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background: radial-gradient(circle at top, #fff 0, #f4f7fb 58%);
+    }
+
+    .counter {
+      width: min(100%, 390px);
+      padding: 36px;
+      text-align: center;
+      background: #fff;
+      border: 1px solid #e4eaf1;
+      border-radius: 24px;
+      box-shadow: 0 20px 60px #23344d12;
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: #64748b;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 1.65rem;
+      letter-spacing: -0.04em;
+    }
+
+    output {
+      display: block;
+      margin: 28px 0;
+      color: #2563eb;
+      font-size: clamp(4.5rem, 25vw, 6rem);
+      font-variant-numeric: tabular-nums;
+      font-weight: 750;
+      letter-spacing: -0.08em;
+      line-height: 1;
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    button {
+      min-height: 54px;
+      border: 0;
+      border-radius: 14px;
+      font: inherit;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 120ms ease, background 120ms ease, box-shadow 120ms ease;
+    }
+
+    button:hover { transform: translateY(-1px); }
+    button:active { transform: translateY(1px); }
+    button:focus-visible { outline: 3px solid #93c5fd; outline-offset: 3px; }
+
+    .change {
+      color: #fff;
+      background: #2563eb;
+      box-shadow: 0 8px 18px #2563eb2a;
+    }
+    .change:hover { background: #1d4ed8; }
+
+    .reset {
+      grid-column: 1 / -1;
+      min-height: 46px;
+      color: #475569;
+      background: #f1f5f9;
+    }
+    .reset:hover { background: #e8eef5; }
+
+    .hint {
+      margin: 22px 0 0;
+      color: #94a3b8;
+      font-size: 0.8rem;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="counter" aria-labelledby="title">
+    <p class="eyebrow">A little utility</p>
+    <h1 id="title">Counter</h1>
+    <output id="count" aria-live="polite" aria-atomic="true">0</output>
+    <div class="controls">
+      <button class="change" id="decrease" type="button" aria-label="Decrease count">− &nbsp; Decrease</button>
+      <button class="change" id="increase" type="button" aria-label="Increase count">+ &nbsp; Increase</button>
+      <button class="reset" id="reset" type="button">Reset</button>
+    </div>
+    <p class="hint">Use the buttons or your ← and → keys</p>
+  </main>
+  <script>
+    const display = document.querySelector('#count');
+    let value = 0;
+
+    function render() {
+      display.value = String(value);
+      display.textContent = String(value);
+    }
+
+    document.querySelector('#increase').addEventListener('click', () => {
+      value += 1;
+      render();
+    });
+
+    document.querySelector('#decrease').addEventListener('click', () => {
+      value -= 1;
+      render();
+    });
+
+    document.querySelector('#reset').addEventListener('click', () => {
+      value = 0;
+      render();
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowRight') {
+        value += 1;
+        render();
+      } else if (event.key === 'ArrowLeft') {
+        value -= 1;
+        render();
+      }
+    });
+  </script>
+</body>
+</html>
